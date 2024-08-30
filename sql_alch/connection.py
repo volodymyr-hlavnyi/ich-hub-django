@@ -49,7 +49,7 @@ def create_parent_child():
     session.close()
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # create_user_address()
     # delete_user_address()
     # create_parent_child()
@@ -67,5 +67,5 @@ if __name__ == '__main__':
     # except ValueError as e:
     #     print(e)
 
-    user_profile_1 = UserProfile(username='john', password='12345678', email='example@dt.com')
-    print(user_profile_1)
+    # user_profile_1 = UserProfile(username='john', password='12345678', email='example@dt.com')
+    # print(user_profile_1)

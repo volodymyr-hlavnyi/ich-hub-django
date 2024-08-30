@@ -1,0 +1,24 @@
+12:41:19 From Teacher 22 Teacher 22 To Everyone:
+	from sqlalchemy import and_, or_, not_		users = session.query(User).filter(and_(User.age>20, User.age<23)).all()	for user in users:	    print(user.id, user.name, user.age)
+12:43:54 From Teacher 22 Teacher 22 To Everyone:
+	users = session.query(User).filter(or_(User.age>20, User.name == 'Ann')).all()	for user in users:	    print(user.id, user.name, user.age)
+12:43:56 From Roman Reimer To Everyone:
+	в монго был бы таким users = collection.find({ 'age': {'$gt': 20, '$lt': 23}
+12:45:56 From Teacher 22 Teacher 22 To Everyone:
+	users = session.query(User).filter(not_(User.name == 'Ann')).all()	for user in users:	    print(user.id, user.name, user.age)
+12:51:40 From Teacher 22 Teacher 22 To Everyone:
+	zapros = session.query(User).order_by(desc(User.age)).all()	for user in zapros:	    print(user.id, user.name, user.age)
+12:53:12 From Teacher 22 Teacher 22 To Everyone:
+	zapros = session.query(User).order_by(desc(User.age), User.name).all()	for user in zapros:	    print(user.id, user.name, user.age)
+13:11:50 From Teacher 22 Teacher 22 To Everyone:
+	from sqlalchemy import func	# Суммирование возрастов пользователей, группировка по именам	total_ages = session.query(User.name, func.sum(User.age)).group_by(User.name).all()	print(total_ages)		# Подсчет количества пользователей в каждой возрастной группе	age_groups = session.query(User.age, func.count(User.id)).group_by(User.age).all()	print(age_groups)
+13:17:28 From Teacher 22 Teacher 22 To Everyone:
+	# Пример запроса, использующего агрегатную функцию	total_count = session.query(func.count(User.id)).scalar()	print("Users count:", total_count)
+13:38:27 From Teacher 22 Teacher 22 To Everyone:
+	age_group = session.query(User.age,func.count(User.age).label('count')).group_by(User.age).having(func.count(User.age) >1).all()		for i in age_group:	     print(i.age, i.count)
+13:44:23 From Viktoriia Larionova To Everyone:
+	извините у меня небольшой потоп, не могу сейчас ответить
+13:47:17 From Teacher 22 Teacher 22 To Everyone:
+	# Подзапрос для вычисления среднего возраста сохраняем в переменную	average_age_subquery = session.query(func.avg(User.age).label('average_age')).subquery()	# Основной запрос, использующий подзапрос для фильтрации пользователей	users = session.query(User).filter(User.age > average_age_subquery).all()		# Выполним подзапрос отдельно для проверки результата	print(f"Average age is {session.query(average_age_subquery).scalar()}")	# Выведем отобранные данные	for user in users:	    print(user.id, user.name, user.age)
+13:54:08 From Teacher 22 Teacher 22 To Everyone:
+	average_ = session.query(func.avg(User.age).label('average')).subquery()		users = session.query(User).filter(User.age > average_).all()		# Выполним подзапрос отдельно для проверки результата	print(f"Average age is {session.query(average_).scalar()}")	# Выведем отобранные данные	for user in users:	    print(user.id, user.name, user.age)

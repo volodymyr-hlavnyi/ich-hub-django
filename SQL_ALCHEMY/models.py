@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey, Text, Column, Integer, String
-from sql_alchemy import engine, Base
+from sql_alch import engine, Base
 
 
 class User(Base):  #declarative style
